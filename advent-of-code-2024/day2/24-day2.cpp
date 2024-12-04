@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 using namespace std;
 
 int main() {
@@ -20,25 +21,73 @@ int main() {
 
     while (getline(infile, line))
     {
-        istringstream linestring(line);
+        stringstream ss(line);
         int num;
+        vector<int> numbers;
         int index = 0;
+        int difference;
 
-        while (linestring >> num)
+        while (ss >> num)
         {
-            index =+ 1;
-        }
-        int arr[index];
-        for (int i = 0; i < index; i++)
-        {
-
+            numbers.push_back(num);
+            index ++;
         }
 
-        cout << index << "  ";
+        valid ++;
+        if (numbers[0] < numbers[1]) // increasing
+        {
+            difference = numbers[1] - numbers[0];
+
+            for (int i = 0; i < index -1; i++)
+            {
+                if (numbers[i] > numbers[i+1])
+                {
+                    valid --;
+                    break;
+                }
+                else if(numbers[i] == numbers[i+1])
+                {
+                    valid --;
+                    break;
+                }
+                else if(numbers[i+1] - numbers[i] != difference)
+                {
+                    valid --;
+                    break;
+                }
+            }
+        }
+        else if (numbers[0] > numbers[1]) // increasing
+        {
+            difference = numbers[0] - numbers[1];
+
+            for (int i = 0; i < index -1; i++)
+            {
+                if (numbers[i] < numbers[i+1])
+                {
+                    valid --;
+                    break;
+                }
+                else if(numbers[i] == numbers[i+1])
+                {
+                    valid --;
+                    break;
+                }
+                else if(numbers[i] - numbers[i+1] != difference)
+                {
+                    valid --;
+                    break;
+                }
+            }
+        }
+
+
+        cout << valid << "  ";
     }
 
     return 0;
 }
+
 
 
 /*
